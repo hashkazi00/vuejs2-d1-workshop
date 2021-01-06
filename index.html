@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!--
+  Eventually by HTML5 UP
+  html5up.net | @ajlkn
+  Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+  <head>
+    <title>The Vue.js mini workshop</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="assets/css/main.css" />
+
+    <!-- development version, includes helpful console warnings -->
+    <!-- TODO: add vue via cnd -->
+    <!-- production version, optimized for size and speed -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  </head>
+  <body class="is-preload">
+    <!-- Header -->
+    <header id="header">
+      <h1>Vue.js mini workshop</h1>
+      <p>
+        If you are interested in learning the hottest framework on the web, here
+        is your chance. <br />
+        Subscribe and we'll let you know when we are ready to take you on this
+        exciting journey!
+      </p>
+    </header>
+
+    <!-- Signup Form -->
+    <!-- TODO: create submit and prevent postback -->
+    <!-- bind to model -->
+    <form id="signup-form" method="post" action="#" @submit.prevent="submit">
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Email Address"
+        required
+        v-model="email"
+      />
+      <input type="submit" value="Sign Up" />
+      <!-- TODO: add visible as class if isVisible= true -->
+      <span class="message success" :class="{visible: isVisible}"
+        >Thank you!</span
+      >
+    </form>
+    <!-- <span class="message success">Thank you!</span> -->
+
+    <!-- Footer -->
+    <footer id="footer">
+      <ul class="icons">
+        <li>
+          <a href="#" class="icon fa-twitter"
+            ><span class="label">Twitter</span></a
+          >
+        </li>
+        <li>
+          <a href="#" class="icon fa-instagram"
+            ><span class="label">Instagram</span></a
+          >
+        </li>
+        <li>
+          <a href="#" class="icon fa-github"
+            ><span class="label">GitHub</span></a
+          >
+        </li>
+        <li>
+          <a href="#" class="icon fa-envelope-o"
+            ><span class="label">Email</span></a
+          >
+        </li>
+      </ul>
+      <ul class="copyright">
+        <li>&copy; Untitled.</li>
+        <li>Credits: <a href="http://html5up.net">HTML5 UP</a></li>
+      </ul>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/main.js"></script>
+
+    <script>
+      // TODO: instantiate vue and add behavior
+      new Vue({
+        el: "signup-form",
+        data: function () {
+          return {
+            isVisible: false,
+            email: ""
+          };
+        },
+        methods: {
+          submit: function () {
+            fetch("https://httpbin.org/post", {
+              method: "POST",
+              body: { email: this.email }
+            })
+              .then((resp) => {
+                this.isVisible = true;
+                this.email = "";
+              })
+              .catch((err) => console.err("error:", err));
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
